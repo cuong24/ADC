@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% block scripts %}
+  {{ super() }}
+  {{ datepicker.loader() }} {# to load jQuery-ui #}
+  {{ datepicker.picker(id=".dp") }}
+{% endblock %}
+{% block header %}
+{% endblock %}
+{% block content %}
+<div style="margin-top:30px;">
+  <table >
+    <tr >
+      <th style="border-top-left-radius: 8px;">Graph Name</th>
+      <th>Graph Type</th>
+      <th>Show Graph</th>
+    </tr>
+    <tr style="text-align: center; font-size: smaller;">
+      <td style="border-top-left-radius: 8px;">Profit by date</td>
+      <td>Line</td>
+      <td>
+        <a style="font-size: smaller;" class="greenbutton" href="{{ url_for('manager.line_chart')}}">
+          View Graph
+        </a>
+      </td>
+    </tr>
+    <tr style="text-align: center; font-size: smaller;">
+      <td style="border-top-left-radius: 8px;">Top 10 booked cars</td>
+      <td>Bar</td>
+      <td>
+        <a style="font-size: smaller;" class="greenbutton" href="{{ url_for('manager.bar_chart')}}">
+          View Graph
+        </a>
+      </td>
+    </tr>
+    <tr style="text-align: center; font-size: smaller;">
+      <td style="border-top-left-radius: 8px;">Most repaired cars</td>
+      <td>Pie</td>
+      <td>
+        <a style="font-size: smaller;" class="greenbutton" href="{{ url_for('manager.pie_chart')}}">
+          View Graph
+        </a>
+      </td>
+    </tr>
+  </table> 
+</div>
+{% endblock %}

@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% block scripts %}
+  {{ super() }}
+  {{ datepicker.loader() }} {# to load jQuery-ui #}
+  {{ datepicker.picker(id=".dp") }}
+{% endblock %}
+{% block header %}
+{% endblock %}
+{% block content %}
+<h2 class="title">Backlogs</h2>
+<table>
+  <tr>
+    <th style="border-top-left-radius: 8px;">Car Type</th>
+    <th>Car Brand</th>
+    <th>Location</th>
+    <th>Request Date</th>
+    <th>Description</th>
+    <th>Status</th>
+    <th style="border-top-right-radius: 8px;">Action</th>
+  </tr>
+  {% for backlog in backlogs %}
+  <tr style="font-size: smaller; text-align: center;" >
+    <td>{{ backlog.CarType }}</td>
+    <td>{{ backlog.CarBrand }}</td>
+    <td>
+      <form style="margin:0px;" 
+        action="{{ url_for('engineer.location_map', car_id=backlog.CarID, location_id=backlog.LocationID) }}" method="post">
+        <input style="font-size: smaller;" class="greenbutton" type="submit" value="View Location">
+      </form>
+    </td>
+    <td>{{ backlog.CreatedDate }}</td>
+    <td>{{ backlog.Description }}</td>
+    <td>{{ backlog.Status }}</td>
+    <td style="max-width:40px;">
+      {% if backlog.Status == "Not done" %}
+      <form style="margin:0px;" action="{{ url_for('engineer.close_backlog', car_id=backlog.CarID, backlog_id=backlog.BacklogID)}}" method="post">
+        <input style="font-size: smaller;" class="warning" type="submit" value="Repair" 
+        onclick="return confirm('Are you sure you want to mark this car as repaired?');">
+      </form>
+      {% endif %}
+    </td>
+  </tr>
+  {% endfor %}
+</table> 
+{% endblock %}

@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% block header %}
+<meta charset="utf-8" />
+<script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js'></script>
+<title>{{ title }}</title>
+{% endblock %}
+{% block content %}
+<div class="formwrapper">
+  <div style="display:block; width:fit-content; clear:both; float:none;min-height:50px; margin-left:auto; margin-right:auto; margin-top:30px; margin-bottom:30px;">
+    <div style="float:left;"><a class="greenbutton" style="margin-left:10px;" href="{{ url_for('manager.bar_chart')}}">Top 10 booked cars</a></div>
+    <div style="float:left;"><a class="greenbutton" style="margin-left:120px; background-color:steelblue; " href="{{ url_for('manager.line_chart')}}">Profit by date</a></div>
+    <div style="float:left;"><a class="greenbutton" style="margin-left:120px;" href="{{ url_for('manager.pie_chart')}}">Most repaired cars</a></div>
+  </div>
+</div>
+<div>
+  <center>
+    <canvas id="chart" width="1000" height="500"></canvas>
+    <script>
+      new Chart(document.getElementById("chart"), {
+      type: 'line',
+      data: {
+        labels : [
+          {% for item in data %}
+            "{{ item['Date'] }}",
+          {% endfor %}
+        ],
+        datasets : [{
+          fillColor: "rgba(151,187,205,0.2)",
+          strokeColor: "rgba(151,187,205,1)",
+          pointColor: "rgba(151,187,205,1)",
+          pointStrokeColor: "#fff",
+          pointHighlightFill: "#fff",
+          pointHighlightStroke: "rgba(151,187,205,1)",
+          bezierCurve : false,
+          label: "Profit",
+          data : [
+	        {% for item in data %}
+            {{ item['Total'] }},
+          {% endfor %}]
+          }]
+      },
+      options : {
+        scales: {
+          yAxes: [{
+            scaleLabel: {
+              display: true,
+              labelString: 'Profit (Dollars)'
+            }
+          }],
+          xAxes: [{
+            scaleLabel: {
+              display: true,
+              labelString: 'Date'
+            }
+          }],
+        },
+        title: {
+          display: true,
+          text: 'Profit by date'
+        }
+      }
+    });
+    </script>
+  </center>
+</div> 
+{% endblock %}

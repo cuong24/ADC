@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block header %}
+{% endblock %}
+{% block content %}
+<div class="loginbox">
+  <form method="post">
+    <div class="form-field" style="float:left; margin-left: 40px;">
+      {{ form.username.label }}&nbsp;&nbsp;&nbsp;&nbsp;{{ form.username }}
+    </div>
+    <div type="password" class="form-field" style="float:left; margin-left: 40px;">
+      {{ form.password.label }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ form.password() }}
+    </div>
+    <div class="form-submit" style="float:left; margin-left: 40px;"> 
+      {{ form.submit }} 
+    </div>
+    <div class="clearfix centerlogin">
+      <p >Not registered? <a href="/auth/register">Create an account now!</a></p>
+    </div>
+  </form>
+  </div>
+{% endblock %}

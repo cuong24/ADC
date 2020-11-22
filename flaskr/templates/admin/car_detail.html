@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% block header %}
+{% endblock %}
+{% block content %}
+<div class="loginbox">
+  {% if action != "update" %}
+  <form method="POST" action="{{url_for('admin.create_car')}}">
+    {%else%}
+    <form method="POST" action="{{url_for('admin.update_car', car_id=car_id)}}">
+    {%endif%}
+    <div style="display:block; width:100%; clear:both; float:none;min-height:50px;">
+      <div class="form-field" style="float:left; margin-left: 40px;">
+        {{ form.location_id.label }}&nbsp;&nbsp;{{ form.location_id }}
+      </div>
+      <div class="form-field" style="float:left; margin-left: 40px;">
+        {{ form.color.label }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ form.color }}
+      </div>
+      <div class="form-field" style="float:left; margin-left: 40px;">
+        {{ form.seat.label }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ form.seat }}
+      </div>
+      {% if action == "update" %}
+      <div class="form-field" style="float:left; margin-left: 40px;">
+        {{ form.status.label }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ form.status }}
+      </div>
+      {% endif %}
+      <div class="form-field" style="float:left; margin-left: 40px;">
+        {{ form.cost.label }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ form.cost }}
+      </div>
+      <div autocomplete="off" class="form-field" style="float:left; margin-left: 40px;">
+        {{ form.mac_address.label }}{{ form.mac_address }}
+      </div>
+      <div autocomplete="off" type="password" class="form-field" style="float:left; margin-left: 40px;">
+        {{ form.brand.label }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ form.brand }}
+      </div>
+      <div class="form-field" style="float:left; margin-left: 40px;">
+        {{ form.car_type.label }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ form.car_type }}
+      </div>
+    </div>
+    {% if action != "update" %}
+    <div class="form-submit" style="margin-left: 40px;">
+      {{ form.submit }}
+    </div>
+    {%else%}
+    <div class="form-submit" style="margin-left: 40px;"
+      onclick="return confirm('Are you sure you want to save changes?');">
+      {{ form.submit }}
+    </div>
+    {%endif%}
+  </form>
+  <div style="width:100%; display:block; height:40px;">
+    {% if action == "update" %}
+    <form style="float:right; margin-top:-65px; margin-right: 60px; padding-right:30px; " action="{{ url_for('admin.delete_car', car_id=car_id) }}" method="post">
+      <input class="danger" type="submit" value="Delete"
+        onclick="return confirm('Are you sure you want to delete this car?');">
+    </form>
+    <a class="greenbutton" style="float:right; margin-top:-65px; margin-right: 50px;"
+      href="{{ url_for('admin.report_car', car_id=car_id)}}">
+      Report
+    </a>
+    {%endif%}
+  </div>
+</div>
+{% endblock %}

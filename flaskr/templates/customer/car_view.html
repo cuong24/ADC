@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% block header %}
+{% endblock %}
+{% block content %}
+<div class="formwrapper">
+  <h2 class="title">Search for a car</h2>
+  <form method="POST" action="{{url_for('customer.car_view')}}">
+    <div style="display:block; width:100%; clear:both; float:none;min-height:50px;">
+        <div class="form-field" style="float:left;">{{ form.brand.label }} {{ form.brand }}</div>
+        <div class="form-field" style="float:left;">{{ form.car_type.label }} {{ form.car_type }}</div>
+        <div class="form-field">{{ form.cost.label }} {{ form.cost }}</div>
+    </div>
+    <div style="display:block; width:100%; clear:both; float:none;min-height:50px;">
+        <div class="form-field">{{ form.color.label }} {{ form.color }}</div>
+        <div class="form-field">{{ form.seat.label }} {{ form.seat }}</div>
+      </div>
+      <div style="display:block; width:100%; clear:both; float:none;">
+        <div class="form-field">{{ form.start.label }}&nbsp;&nbsp;{{ form.start }}</div>
+        <div class="form-field">{{ form.end.label }} &nbsp;{{ form.end }}</div>
+      </div>
+        <div style="display:block; width:100%; clear:both; float:none; min-height:50px; padding-top:10px;">
+        <div class="form-submit"> {{ form.submit }} 
+      </div>
+    </div>    
+  </form>
+</div>
+<p>Showing results - {{cars|length}}</p>
+<table>
+  <tr>
+    <th style="border-top-left-radius: 8px;">Brand</th>
+    <th>Type</th>
+    <th>Colour</th>
+    <th>Seats</th>
+    <th>Location</th>
+    <th>Hourly Cost</th>
+    <th style="border-top-right-radius: 8px;">Action</th>
+  </tr>
+  {% for car in cars %}
+  <tr style="font-size: smaller;">
+    <td>{{ car.Brand}}</td>
+    <td>{{ car.Type }}</td>
+    <td>{{ car.Color}}</td>
+    <td>{{ car.Seat}}</td>
+    <td>{{ car.Address}}</td>
+    <td>{{ car.Cost}}</td>
+    <td style="max-width:40px;">
+      <a style="font-size: smaller;" class="greenbutton" 
+          href="{{ url_for('customer.book_car', car=car,start_date=start_date,end_date=end_date)}}">
+        Book now
+      </a>
+    </td>
+  </tr>
+  {% endfor %}
+  </table> 
+{% endblock %}

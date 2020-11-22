@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block header %}
+{% endblock %}
+{% block content %}
+<div class="loginbox">
+  <form method="POST" action="{{ url_for('auth.register')}}">
+    <div style="display:block; width:100%; clear:both; float:none;min-height:50px;">
+      <div autocomplete="off" class="form-field" style="float:left; margin-left: 40px;">
+        {{ form.username.label }}&nbsp;&nbsp;&nbsp;&nbsp;{{ form.username }}
+      </div>
+      <div autocomplete="off" type="password" class="form-field" style="float:left; margin-left: 40px;">
+        {{ form.password.label }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ form.password }}
+      </div>
+      <div class="form-field" style="float:left; margin-left: 40px;">
+        {{ form.email.label }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ form.email }}
+      </div>
+      <div class="form-field" style="float:left; margin-left: 40px;">
+        {{ form.firstname.label }}&nbsp;&nbsp;&nbsp;{{ form.firstname }}
+      </div>
+      <div class="form-field" style="float:left; margin-left: 40px;">
+        {{ form.lastname.label }}&nbsp;&nbsp;&nbsp;&nbsp;{{ form.lastname }}
+      </div>
+      <div class="form-field" style="float:left; margin-left: 40px;">
+        {{ form.phone.label }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ form.phone }}
+      </div>
+      <div class="form-submit" style="margin-left: 40px;"> 
+        {{ form.submit }} 
+      </div>
+    </div>
+    {% if user_type != "Admin" %}
+      <p style="margin-left: 40px;">Already registered? <a href="{{url_for('auth.login')}}">Log in here.</a></p>
+    {% endif %}
+  </form>
+ </div>
+{% endblock %}

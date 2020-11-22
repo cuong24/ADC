@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% block scripts %}
+  {{ super() }}
+  {{ datepicker.loader() }} {# to load jQuery-ui #}
+  {{ datepicker.picker(id=".dp") }}
+{% endblock %}
+{% block header %} 
+{% endblock %}
+{% block content %}
+<div class="formwrapper">
+  <h2 class="title">Manage Bookings</h2>
+  <form method="POST" action="/customer/bookings">
+      <div style="display:block; width:100%; clear:both; float:none;">
+        <div class="form-field">{{ form.start.label }} {{ form.start() }}</div>
+      </div>
+      <div style="display:block; width:100%; clear:both; float:none;">
+        <div class="form-field">{{ form.end.label }} &nbsp;{{ form.end() }}</div>
+      </div>
+      <div style="display:block; width:100%; clear:both; float:none; min-height:50px; padding-top:10px;">
+        <div class="form-submit"> {{ form.submit }} </div>
+      </div>
+  </form>
+</div>
+  <table>
+  <tr>
+    <th>Car</th>
+    <th>Rent Time</th>
+    <th>Total Cost</th>
+    <th>Status</th>
+    <th>More Detail</th>
+  </tr>
+  {% for booking in bookings %}
+  <tr style="font-size: smaller;">
+  <td>{{ booking.CarBrand }}</td>
+  <td>{{ booking.RentTime }}</td>
+  <td>{{ booking.TotalCost }}</td>
+  <td>{{ booking.Status }}</td>
+  <td>
+    <form style="margin:0px;" action="{{ url_for('customer.view_booking_detail', booking=booking) }}" method="post">
+      <input style="margin:0px; font-size: smaller;" class="greenbutton" type="submit" value="View Booking">
+    </form>
+  </td>
+  </tr>
+  {% endfor %}
+  </table> 
+{% endblock %}

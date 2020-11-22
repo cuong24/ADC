@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% block header %}
+{% endblock %}
+{% block content %}
+<div class="formwrapper">
+  <h2 class="title">Search for a User</h2>
+  <form method="POST" action="{{url_for('admin.user_view')}}">
+    <div style="display:block; width:100%; clear:both; float:none;min-height:50px;">
+      <div class="form-field" style="float:left;">{{ form.username.label }}{{ form.username }}</div>
+      <div class="form-field" style="float:left;">{{ form.firstname.label }}{{ form.firstname }}</div>
+      <div class="form-field" style="float:left;">{{ form.lastname.label }}{{ form.lastname }}</div>
+    </div>
+    <div style="display:block; width:100%; clear:both; float:none;min-height:50px;">
+      <div class="form-field" style="float:left;">{{ form.phone.label }}
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ form.phone }}
+      </div>
+      <div class="form-field" style="float:left;">{{ form.email.label }}
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ form.email }}
+      </div>
+      <div class="form-field" style="float:left;">{{ form.user_type.label }}&nbsp;{{ form.user_type }}</div>
+    </div>
+    <div style="display:block; width:100%; clear:both; float:none; min-height:50px; padding-top:10px;">
+      <div class="form-submit">
+        {{ form.submit }} 
+        <a class="greenbutton" style="margin-left:20px;" href="{{url_for('auth.register') }}">Add New</a>
+      </div>
+    </div>  
+  </form>
+</div>
+<p>Showing results - {{users|length}}</p>
+<table>
+  <tr>
+    <th style="border-top-left-radius: 8px;">Username</th>
+    <th>First</th>
+    <th>Last</th>
+    <th>Phone</th>
+    <th>Email</th>
+    <th>User Type</th>
+    <th>Mac Address</th>
+    <th>Action</th>
+  </tr>
+  {% for user in users %}
+  <tr style="font-size: smaller;">
+    <td>{{ user.Username }}</td>
+    <td>{{ user.FirstName }}</td>
+    <td>{{ user.LastName }}</td>
+    <td>{{ user.Phone }}</td>
+    <td>{{ user.Email }}</td>
+    <td>
+      {% if user.UserType != "Engineer" and user.UserType != "Admin" and user.UserType != "Manager" %}
+        Customer
+      {% else %}
+        {{ user.UserType }}
+      {% endif %}
+    </td>
+    <td>{{ user.EngineerMacAddress }}</td>
+    <td style="text-align: center;">
+      <a style="font-size: smaller;" class="greenbutton" 
+        href="{{url_for('admin.update_user', user_id=user.ID, user_type=user.UserType)}}">
+        Edit
+      </a>
+    </td>
+  </tr>
+  {% endfor %}
+</table> 
+{% endblock %}

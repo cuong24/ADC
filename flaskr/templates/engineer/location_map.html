@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block header %}
+{% endblock %}
+{% block content %}
+<div class="formwrapper">
+  <h2 class="title">Car details</h2>
+  <div style="display:block; width:100%; clear:both; float:none;height:30px;">
+    <div style="width:300px; float:left;"><strong>Car Type:</strong></div>
+    <div style="width:300px; float:left;">Brand: {{ car.Brand }}</div>
+    <div style="width:300px; float:left;">Type: {{ car.Type }}</div>
+  </div>
+  <hr>
+  <div style="display:block; width:100%; clear:both; float:none;height:30px;">
+    <div style="width:300px; float:left;"><strong>Car Details:</strong></div>
+    <div style="width:300px; float:left;">Color: {{ car.Color }}</div>
+    <div style="width:300px; float:left;">Number of Seats: {{ car.Seat }}</div>
+  </div>
+  <hr>
+  <div style="display:block; width:100%; clear:both; float:none;height:30px;">
+    <div style="width:300px; float:left;"><strong>Address</strong></div>
+    <div style="float:left;">{{ location.Address }}</div>
+  </div>
+  <hr>
+  <div>
+    <iframe src="http://maps.google.com/maps?q={{ location.Latitude }},{{ location.Longitude }}&z=15&output=embed" width="1160" height="800" frameborder="0" style="border:0" allowfullscreen></iframe>
+  </div>
+
+</div>
+{% endblock %}

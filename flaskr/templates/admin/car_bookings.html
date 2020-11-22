@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block header %}
+{% endblock %}
+{% block content %}
+<div class="formwrapper">
+  <h2 class="title">Bookings for Car ID {{ id }}</h2>
+  </div>
+    <table>
+      <tr>
+        <th style="border-top-left-radius: 8px;">Customer ID</th>
+        <th>Rent Time</th>
+        <th>Return Time</th>
+        <th>Total Cost</th>
+        <th>Status</th>
+      </tr>
+      {% for booking in bookings %}
+      <tr style="font-size: smaller;">
+        <td>{{ booking.CustomerID}}</td>
+        <td>{{ booking.RentTime}}</td>
+        <td>{{ booking.ReturnTime }}</td>
+        <td>{{ booking.TotalCost }}</td>
+        <td>{{ booking.Status }}</td>
+      </tr>
+  {% endfor %}
+  </table> 
+{% endblock %}

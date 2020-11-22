@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% block header %}
+{% endblock %}
+{% block content %}
+<div class="formwrapper">
+  <h2 class="title">Booking Detail</h2>
+  <div style="display:block; width:100%; clear:both; float:none;height:30px;">
+    <div style="width:300px; float:left;"><strong>Car Type:</strong></div>
+    <div style="width:300px; float:left;">Brand: {{ car.Brand }}</div>
+    <div style="width:300px; float:left;">Type: {{ car.Type }}</div>
+  </div>
+  <hr>
+  <div style="display:block; width:100%; clear:both; float:none;height:30px;">
+    <div style="width:300px; float:left;"><strong>Car Details:</strong></div>
+    <div style="width:300px; float:left;">Colour: {{ car.Color }}</div>
+    <div style="width:300px; float:left;">Number of Seats: {{ car.Seat }}</div>
+  </div>
+  <hr>
+  <div style="display:block; width:100%; clear:both; float:none;height:30px;">
+    <div style="width:300px; float:left;"><strong>Booking Schedule:</strong></div>
+    <div style="width:300px; float:left;">{{ start_date }}</div>
+    <div style="width:300px; float:left;">{{ end_date }}</div>
+  </div>
+  <hr>
+  <div style="display:block; width:100%; clear:both; float:none;height:30px;">
+    <div style="width:300px; float:left;"><strong>Cost Summary:</strong></div>
+    <div style="width:300px; float:left;">Hourly Cost: {{ car.Cost }} USD</div>
+    <div style="width:300px; float:left;">Total Cost: {{ total_cost }} USD</div>
+  </div>
+  {% if action == "view" %}
+  <hr>
+  <div style="display:block; width:100%; clear:both; float:none;height:30px;">
+    <div style="width:300px; float:left;"><strong>Status:</strong></div>
+    <div style="width:300px; float:left;">{{ status }}</div>
+  </div>
+  {% endif %}
+  <hr>
+  {% if action == "confirm" %}
+  <p>*** Login to google calendar account when being asked and have your booking event created for you!
+  </p>
+  <hr>
+  <a type="submit" class="greenbutton" style="margin-top: 10px;"
+    onclick="return confirm('Are you sure you want to confirm this booking?');"
+    href="{{ url_for('customer.confirm_booking' , car_id=car.ID, start_date=start_date,end_date=end_date,total_cost=total_cost, action='confirm') }}">
+    Confirm Booking
+  </a>
+  <a type="submit" class="greenbutton danger" style="margin-top: 10px; float:right;"
+    onclick="return confirm('Are you sure you want to cancel this booking?');"
+    href="{{ url_for('home.index', id=car.ID, action='cancel') }}">
+    Cancel Booking
+    {% endif %}
+    {% if action == "view" and status == "Booked" %}
+    <div style="max-width:40px;">
+      <form style="margin:0px;" action="{{ url_for('customer.cancel_booking', booking_id=booking_id)}}" method="post">
+        <input style="margin:0px;" class="warning" type="submit" value="Cancel"
+          onclick="return confirm('Are you sure you want to cancel this booking?');">
+      </form>
+    </div>
+    {% endif %}
+  </a>
+</div>
+{% endblock %}

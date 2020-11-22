@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% block scripts %}
+  {{ super() }}
+  {{ datepicker.loader() }} {# to load jQuery-ui #}
+  {{ datepicker.picker(id=".dp") }}
+{% endblock %}
+{% block header %}
+{% endblock %}
+{% block content %}
+<div class="formwrapper">
+  <h2 class="title">Manage Cars</h2>
+  <form method="POST" action="{{ url_for('admin.car_view')}}">
+  <div style="display:block; width:100%; clear:both; float:none;min-height:50px;">
+      <div class="form-field" style="float:left;">{{ form.brand.label }}{{ form.brand }}</div>
+      <div class="form-field">{{ form.color.label }}&nbsp;{{ form.color }}</div>
+      <div class="form-field">{{ form.seat.label }}
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ form.seat }}
+      </div>
+</div>
+<div style="display:block; width:100%; clear:both; float:none;min-height:50px;">
+      <div class="form-field" style="float:left;">{{ form.car_type.label}}&nbsp;&nbsp;{{ form.car_type }}</div>
+      <div class="form-field" style="float:left;"">{{ form.cost.label }}&nbsp;&nbsp;{{ form.cost }}</div>
+      <div class="form-field">{{ form.mac_address.label }}{{ form.mac_address }}</div>
+      </div>
+      <div style="display:block; width:100%; clear:both; float:none;">
+      <div style="display:block; width:100%; clear:both; float:none; min-height:50px; padding-top:10px;">
+      <div class="form-submit"> 
+        {{ form.submit }} 
+        <a class="greenbutton" style="margin-left:20px;" href="{{ url_for('admin.create_car') }}">Add New</a>
+      </div>
+      </div>
+  </form>
+</div>
+<p>Showing results - {{cars|length}}</p>
+  <table>
+    <tr>
+      <th style="border-top-left-radius: 8px; ">Mac Address</th>
+      <th>Type</th>
+      <th>Brand</th>
+      <th>Color</th>
+      <th>Seat</th>
+      <th>Status</th>
+      <th>Location</th>
+      <th>History</th>
+      <th style="border-top-right-radius: 8px;">Edit</th>
+    </tr>
+    {% for car in cars %}
+    <tr style="font-size: smaller;">
+      <td>{{ car.MacAddress }}</td>
+      <td>{{ car.Type }}</td>
+      <td>{{ car.Brand }}</td>
+      <td>{{ car.Color }}</td>
+      <td>{{ car.Seat }}</td>
+      <td>{{ car.Status }}</td>
+      <td>{{ car.Address }}</td>
+      <td style="text-align: center;">
+        <a style="font-size: smaller;" class="greenbutton" href="{{ url_for('admin.car_bookings', car_id=car.ID)}}">History</a>
+      </td>
+      <td style="text-align: center;">
+        <a  style="font-size: smaller;" class="greenbutton" href="{{ url_for('admin.update_car', car_id=car.ID, action='update')}}">Edit</a>
+      </td>
+    </tr>
+    {% endfor %}
+  </table> 
+{% endblock %}
